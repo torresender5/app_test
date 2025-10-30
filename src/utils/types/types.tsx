@@ -10,6 +10,7 @@ export type RootStackParamList = {
   LoginScreen: undefined;
   Dashboard: undefined;
   ForgotPasswordScreen: undefined;
+  PersonalData: undefined
 
 };
 

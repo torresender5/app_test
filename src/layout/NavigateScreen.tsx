@@ -9,6 +9,7 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import Dashboard from '../screens/Dashboard';
+import PersonalDataScreen from '../screens/personalDataScreen';
 
 const RootStack = createNativeStackNavigator({
   screens: {
@@ -26,8 +27,18 @@ const RootStack = createNativeStackNavigator({
       screen: ProfileScreen,
       options: {
         title: 'Profile',
-        header: BarTop
+        header: BarTop,
+
       },
+    },
+    PersonalData: {
+      screen: PersonalDataScreen,
+      options: {
+        title: 'Personal Data',
+        header: BarTop,
+      },
+      navigationKey: 'Profile'
+
     },
     LoginScreen:{
       screen: LoginScreen,
@@ -63,11 +74,13 @@ const RootStack = createNativeStackNavigator({
     Dashboard: {
       screen: Dashboard,
       options: {
-        headerShown:false,
+        // headerShown:false,
         headerBackVisible: false,
         contentStyle: {
           backgroundColor: '#fff',
-        }
+        },
+        // title: 'Profile',
+        header: BarTop
       },
     },
   },

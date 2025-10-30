@@ -12,10 +12,10 @@ const HomeBarTop = (props: NativeStackHeaderProps) => {
 //   const navigation = useNavigation();
   const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     return (
-        <Appbar.Header style={{backgroundColor: primaryContainer}}>
+        <Appbar.Header style={{height: 500, backgroundColor: primaryContainer}}>
             <Appbar.Content title={props.options.title} color={primary}/>
-            {/* <Appbar.Action icon="calendar" onPress={() => {}} />
-            <Appbar.Action icon="magnify" onPress={() => {}} /> */}
+            {/* <Appbar.Action icon="calendar" onPress={() => {}} />*/}
+            <Appbar.Action icon="magnify" onPress={() => {}} /> 
         </Appbar.Header>
     )
 };

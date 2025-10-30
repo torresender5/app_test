@@ -14,7 +14,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../utils/types/types';
 import { showMessage } from 'react-native-flash-message';
 import Loader from '../component/Loader';
-
+// import { API_URL , NEXT_PUBLIC_API_URL} from '@env'; 
 // type Props = {
 //   navigation: Navigation;
 // };
@@ -28,6 +28,7 @@ const LoginScreen = () => {
   const _onLoginPressed = async () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
+    const API_URL = process.env.API_URL;
     setShowLoader(true);
 
     if (emailError || passwordError) {
@@ -36,39 +37,34 @@ const LoginScreen = () => {
       setShowLoader(false);
       return;
     }
-    console.log('################', email.value)
-    console.log('################', password.value)
-    console.log('URL=', process.env.NEXT_PUBLIC_API_URL)
-    console.log('URL 2=', process.env.API_URL)
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: email.value, password: password.value }),
-    });
-    console.log('###############')
-    const data = await res.json();
-    console.log(data)
-    if (res.ok) {
+    // const res = await fetch(`${API_URL}/auth/login`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ email: email.value, password: password.value }),
+    // });
+    // const data = await res.json();
+    // console.log(data)
+    // if (res.ok) {
       showMessage({
         message: 'successful login',
         floating: true,
         type: "success"
       });
       setShowLoader(false);
-      navigate('Dashboard');
-    } else {
-      // navigate('Dashboard');
-      console.log('##### ERROR ####', data.error)
-      setShowLoader(false);
-      showMessage({
-        message: data.error,
-        floating: true,
-        type: "danger"
-      });
+      navigate('Profile');
+    // } else {
+    //   // navigate('Dashboard');
+    //   console.log('##### ERROR ####', data.error)
+    //   setShowLoader(false);
+      // showMessage({
+      //   message: data.error,
+      //   floating: true,
+      //   type: "danger"
+      // });
   
-    }
+    // }
 
     // navigate('Dashboard');
   };
