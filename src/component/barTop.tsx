@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Appbar } from 'react-native-paper';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { useAppTheme } from '../../index'
-import { theme } from '../utils/core/theme';
+import { theme } from '../theme/theme';
 
 const BarTop = (props: NativeStackHeaderProps) => {
   const {

@@ -1,6 +1,6 @@
 import { StyleSheet, View, Image} from 'react-native';
 import { useTheme, Card, Text, Menu, MD2Colors } from 'react-native-paper';
-import { theme } from '../utils/core/theme';
+import { theme } from '../theme/theme';
 import Icon from '@react-native-vector-icons/material-design-icons'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../utils/types/types';
@@ -40,7 +40,7 @@ const ProfileScreen = () => {
             Settings
         </Text>
         <View style={{backgroundColor: MD2Colors.grey200, borderRadius: 10, marginTop:10, marginLeft: 10, marginRight: 10}}>
-            <Menu.Item leadingIcon={() => <Icon size={24} name="lock-reset" style={styles.colorIcon} />} title="change Password" />
+            <Menu.Item leadingIcon={() => <Icon size={24} name="lock-reset" style={styles.colorIcon} />} title="change Password" onPress={() => navigate('ChangePassword')}/>
         </View>
 
       </Card>

@@ -10,7 +10,9 @@ import {
   useTheme
 } from 'react-native-paper';
 import { name as appName } from './app.json';
-import { theme } from './src/utils/core/theme';
+import { theme } from './src/theme/theme';
+import {AuthProvider} from './src/utils/context/AuthContext';
+// import {AxiosProvider} from './src/utils/context/AxiosContext';
 
 export type AppTheme = typeof theme;
 
@@ -19,7 +21,11 @@ export const useAppTheme = () => useTheme<AppTheme>(theme);
 export default function Main() {
   return (
     <PaperProvider theme={theme}>
-      <App />
+      <AuthProvider>
+        {/* <AxiosProvider> */}
+          <App />
+        {/* </AxiosProvider> */}
+      </AuthProvider>
     </PaperProvider>
   );
 }

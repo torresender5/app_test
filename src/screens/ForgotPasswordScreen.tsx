@@ -6,7 +6,7 @@ import BackButton from '../component/BackButton';
 import Logo from '../component/Logo';
 import Header from '../component/Header';
 import TextInput from '../component/TextInput';
-import { theme } from '../utils/core/theme';
+import { theme } from '../theme/theme';
 import Button from '../component/Button';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';

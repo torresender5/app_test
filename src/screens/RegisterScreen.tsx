@@ -16,7 +16,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../utils/types/types';
-import { theme } from '../utils/core/theme';
+import { theme } from '../theme/theme';
 import { showMessage } from 'react-native-flash-message';
 
 // type Props = {

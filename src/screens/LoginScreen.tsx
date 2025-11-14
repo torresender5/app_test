@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useContext } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, Alert } from 'react-native';
 import Background from '../component/Background';
 import Logo from '../component/Logo';
@@ -14,6 +14,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../utils/types/types';
 import { showMessage } from 'react-native-flash-message';
 import Loader from '../component/Loader';
+import { AuthContext } from '../utils/context/AuthContext';
+import AxiosContext from '../utils/context/AxiosContext';
+import * as Keychain from 'react-native-keychain';
+// import axios from 'axios';
 // import { API_URL , NEXT_PUBLIC_API_URL} from '@env'; 
 // type Props = {
 //   navigation: Navigation;
@@ -24,11 +28,14 @@ const LoginScreen = () => {
   const [password, setPassword] = useState({ value: '', error: '' });
   const [showLoader, setShowLoader] = useState(false);
   const { navigate } = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const authContext = useContext(AuthContext);
+  const axios = AxiosContext();
+  // const publicAxios = useContext(AxiosContext);
 
   const _onLoginPressed = async () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
-    const API_URL = process.env.API_URL;
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
     setShowLoader(true);
 
     if (emailError || passwordError) {
@@ -37,36 +44,71 @@ const LoginScreen = () => {
       setShowLoader(false);
       return;
     }
-    // const res = await fetch(`${API_URL}/auth/login`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ email: email.value, password: password.value }),
-    // });
-    // const data = await res.json();
-    // console.log(data)
-    // if (res.ok) {
-      showMessage({
-        message: 'successful login',
-        floating: true,
-        type: "success"
-      });
-      setShowLoader(false);
-      navigate('Profile');
-    // } else {
-    //   // navigate('Dashboard');
-    //   console.log('##### ERROR ####', data.error)
-    //   setShowLoader(false);
-      // showMessage({
-      //   message: data.error,
-      //   floating: true,
-      //   type: "danger"
-      // });
-  
-    // }
+    try {
+      console.log('###############', API_URL)
+      let url = `auth/login`;
+      console.log(url)
+      let data = {
+        email: email.value,
+        password: password.value,
+      }
+      console.log(data)
+      // let response = await publicAxios.post(url, data);
+      let response = await axios.post(url, data)
+      console.log(response)
+      if (response) {
+        const {accessToken} = response.data;
+        authContext?.setAuthState({
+          accessToken,
+          authenticated: true,
+        });
+
+        await Keychain.setGenericPassword(
+          'token',
+          // JSON.stringify({
+            accessToken,
+            // refreshToken,
+            
+          // }),
+        );
+        // const res = await fetch(`${API_URL}/auth/login`, {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ email: email.value, password: password.value }),
+        // });
+        // const data = await res.json();
+        // console.log(data)
+    
+        showMessage({
+          message: 'successful login',
+          floating: true,
+          type: "success"
+        });
+        setShowLoader(false);
+        navigate('Profile');
+      } else {
+      //   // navigate('Dashboard');
+      //   console.log('##### ERROR ####', data.error)
+      //   setShowLoader(false);
+        showMessage({
+          message: response,
+          floating: true,
+          type: "danger"
+        });
+    
+      }
 
     // navigate('Dashboard');
+    } catch (error) {
+      // Alert.alert(, error.response.data.message);
+      showMessage({
+        message: 'Login Failed',
+        floating: true,
+        type: "danger"
+      });
+    }
   };
 
   return (
